@@ -9,5 +9,4 @@ public class SpringBackupsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBackupsApplication.class, args);
 	}
-
 }
