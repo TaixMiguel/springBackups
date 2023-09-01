@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <title th:text="${title}">Template</title>
+  </head>
+  <body class="w3-light-grey">
+    <div class="w3-content w3-margin-top" style="max-width:1400px;">
+      <div class="w3-row-padding">
+        <div class="w3-quarter"  th:fragment="menu">
+
+          <div class="w3-white w3-text-grey w3-card-4">
+              <img src="https://www.muycomputer.com/wp-content/uploads/2021/03/D%C3%ADa_Mundial_del_Backup-1000x600.jpg" style="width:100%" />
+              <div class="w3-container">
+                <h4 th:text="${appName}"></h4>
+              </div>
+          </div>
+          <br />
+
+          <div class="w3-white w3-text-grey w3-card-4">
+	          <a href="/" style="text-decoration: none;">
+	              <div class="item-menu">
+	                <div class="w3-container">
+	                  <h4><i class="fa fa-home w3-hover-opacity w3-large"></i> Inicio</h4>
+	                </div>
+	              </div>
+	          </a>
+          </div>
+
+          <div class="w3-white w3-text-grey w3-card-4">
+	          <a href="/createNewBackup" style="text-decoration: none;">
+	              <div class="item-menu">
+	                <div class="w3-container">
+	                  <h4><i class="fa fa-plus-square w3-hover-opacity w3-large"></i> Crear nuevo</h4>
+	                </div>
+	              </div>
+	          </a>
+          </div>
+        </div>
+
+        <div class="w3-threequarter">
+          <div class="w3-panel w3-gray w3-center">
+              <h1 class="w3-text-dark-gray" style="text-shadow:1px 1px 0 #444">
+                <b th:text="${appName}"></b>
+              </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="w3-display-container w3-gray w3-margin-top" style="height:50px;" th:fragment="footer">
+      <div class="w3-display-middle">
+        <a href="https://github.com/TaixMiguel/springBackups" target="_blank"><i class="fa fa-github w3-hover-opacity w3-large"></i></a> |
+        ©<a href="https://github.com/TaixMiguel/" target="_blank">TaixMiguel</a> |
+        2023
+      </div>
+      <div class="w3-display-bottomright w3-small" style="padding-right: 5px; padding-bottom: 1px;">
+        Versión <span th:text="${appVersion}">0.0.0</span>
+      </div>
+    </footer>
+  </body>
+</html>

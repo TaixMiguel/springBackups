@@ -25,22 +25,22 @@ public class Backup {
 	@GeneratedValue
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
-	@Column(nullable = true)
 	private String description;
 
 	@ManyToOne
 	private StorageService storageService;
 
+	@Column(nullable = false)
 	private String sourceDir;
 
+	@Column(nullable = false)
 	private String destinationDir;
 
-	@Column(nullable = true)
-	private String user;
+	private String username;
 
-	@Column(nullable = true)
 	private String password;
 
 	private int nBackupsMax;
@@ -51,7 +51,10 @@ public class Backup {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date auditTime;
 
-	protected Backup() {
+	public Backup() {
+		this.id = Long.valueOf(0);
+		this.nBackupsMax = 10;
+		this.swSensorMQTT = false;
 	}
 
 	public long getId() {
@@ -103,11 +106,11 @@ public class Backup {
 	}
 
 	public String getUser() {
-		return user;
+		return username;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.username = user;
 	}
 
 	public String getPassword() {
@@ -145,8 +148,8 @@ public class Backup {
 	@Override
 	public String toString() {
 		return "Backup [id=" + id + ", name=" + name + ", description=" + description + ", storageService="
-				+ storageService + ", sourceDir=" + sourceDir + ", destinationDir=" + destinationDir + ", user=" + user
-				+ ", password=" + password + ", nBackupsMax=" + nBackupsMax + ", swSensorMQTT=" + swSensorMQTT
-				+ ", auditTime=" + auditTime + "]";
+				+ storageService + ", sourceDir=" + sourceDir + ", destinationDir=" + destinationDir + ", user="
+				+ username + ", password=" + password + ", nBackupsMax=" + nBackupsMax + ", swSensorMQTT="
+				+ swSensorMQTT + ", auditTime=" + auditTime + "]";
 	}
 }
