@@ -41,7 +41,7 @@ public class BackupController extends AbstractController {
 		if (newBackup.getName().isEmpty())
 			bindingResult.addError(new FieldError("name", "name", "No puede estar vacio"));
 		if (newBackup.getName().contains(" "))
-			bindingResult.addError(new FieldError("name", "name", "No puede incluir espacios vacios"));
+			bindingResult.addError(new FieldError("name", "name", "No puede incluir espacios vacios en blanco"));
 
 		if (newBackup.getSourceDir().isEmpty())
 			bindingResult.addError(new FieldError("sourceDir", "sourceDir", "No puede estar vacio"));

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <head th:replace="template::head" />
+  <head th:replace="~{template::head}" />
   <body class="w3-light-grey">
     <div class="w3-content w3-margin-top" style="max-width:1400px;">
         <div class="w3-row-padding">
-            <div class="w3-quarter"  th:replace="template::menu" />
+            <div class="w3-quarter"  th:replace="~{template::menu}" />
 
             <div class="w3-threequarter">
                 <div class="w3-panel w3-gray w3-center">
@@ -23,12 +23,12 @@
     				<span onclick="location.href = '/execBackup/{{backup.id_backup}}';" class="w3-button w3-display-right">
       					<i class="fa fa-play w3-right w3-xxxlarge" title="Lanzar backup"></i>
     				</span>
-    				<h2 style="cursor: pointer;" onClick="$('#targetBackup{{backup.id_backup}}').toggleClass('w3-hide');" th:text="${backup.auditTime}" />
+    				<h2 style="cursor: pointer;" onClick="$('#targetBackup{{backup.id_backup}}').toggleClass('w3-hide');" th:text="${backup.name}" />
   				</div>
             </div>
         </div>
     </div>
 
-    <footer class="w3-display-container w3-gray w3-margin-top" style="height:50px;" th:replace="template::footer" />
+    <footer class="w3-display-container w3-gray w3-margin-top" style="height:50px;" th:replace="~{template::footer}" />
   </body>
 </html>

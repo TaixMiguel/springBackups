@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <head th:replace="template::head" />
+  <head th:replace="~{template::head}" />
   <body class="w3-light-grey">
     <div class="w3-content w3-margin-top" style="max-width:1400px;">
         <div class="w3-row-padding">
-            <div class="w3-quarter" th:replace="template::menu" />
+            <div class="w3-quarter" th:replace="~{template::menu}" />
 
             <div class="w3-threequarter">
                 <div class="w3-panel w3-gray w3-center">
@@ -46,8 +46,9 @@
 						<div class="w3-row-padding">
 							<div class="w3-third">
 								<label class="w3-text-grey"><b><span class="w3-text-red" title="Campo obligatorio">*</span> Servidor</b></label><br />
-								<select class="w3-select w3-border form-control" id="storageService" required>
-	    							<option>Seleccionar</option>
+								
+								<select class="form-control w3-select w3-border" th:field="*{storageService}" id="storageService" required>
+	    							<option value="">Seleccionar</option>
 	    							<option th:each="item : ${storageServices}" th:value="${item.id}" th:text="'[' + ${item.code} +'] '+ ${item.name}"></option>
 								</select>
 								<span th:if="${#fields.hasErrors('storageService')}" th:errors="*{storageService}" class="w3-text-red help-block" id="storageService-error">Errores</span>
@@ -87,6 +88,6 @@
         </div>
     </div>
 
-    <footer class="w3-display-container w3-gray w3-margin-top" style="height:50px;" th:replace="template::footer" />
+    <footer class="w3-display-container w3-gray w3-margin-top" style="height:50px;" th:replace="~{template::footer}" />
   </body>
 </html>
