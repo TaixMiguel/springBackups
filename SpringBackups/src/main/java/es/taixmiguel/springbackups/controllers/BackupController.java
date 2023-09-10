@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.taixmiguel.springbackups.models.Backup;
+import es.taixmiguel.springbackups.models.StorageService;
 import es.taixmiguel.springbackups.services.BackupService;
 
 /**
@@ -63,6 +64,6 @@ public class BackupController extends AbstractController {
 	private void updateModelNewBackup(Model model, Backup backup) {
 		model.addAttribute("title", "Creación de backup");
 		model.addAttribute("backupForm", backup);
-		model.addAttribute("storageServices", service.getAllStorageService());
+		model.addAttribute("storageServices", StorageService.values());
 	}
 }

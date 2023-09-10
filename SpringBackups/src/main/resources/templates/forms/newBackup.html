@@ -46,10 +46,9 @@
 						<div class="w3-row-padding">
 							<div class="w3-third">
 								<label class="w3-text-grey"><b><span class="w3-text-red" title="Campo obligatorio">*</span> Servidor</b></label><br />
-								
 								<select class="form-control w3-select w3-border" th:field="*{storageService}" id="storageService" required>
 	    							<option value="">Seleccionar</option>
-	    							<option th:each="item : ${storageServices}" th:value="${item.id}" th:text="'[' + ${item.code} +'] '+ ${item.name}"></option>
+	    							<option th:each="item : ${storageServices}" th:value="${item}" th:text="'[' + ${item} +'] '+ ${item.name}"></option>
 								</select>
 								<span th:if="${#fields.hasErrors('storageService')}" th:errors="*{storageService}" class="w3-text-red help-block" id="storageService-error">Errores</span>
 							</div>
