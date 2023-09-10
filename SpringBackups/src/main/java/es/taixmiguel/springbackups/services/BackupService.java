@@ -11,5 +11,11 @@ public interface BackupService {
 
 	public Backup add(Backup backup);
 
+	public Backup update(Backup backup);
+
+	public Backup remove(Long id);
+
+	public Backup findById(Long id);
+
 	public List<Backup> findAll();
 }
