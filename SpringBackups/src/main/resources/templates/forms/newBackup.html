@@ -9,14 +9,12 @@
             <div class="w3-threequarter">
                 <div class="w3-panel w3-gray w3-center">
                     <h3 class="w3-text-dark-gray" style="text-shadow:1px 1px 0 #444">
-                        <b th:text="${backupForm.id != 0} ? 'Actualizar backup' : 'Nuevo backup'" />
+                        <b th:text="${backupForm.id != 0} ? 'Actualización de un backup' : 'Nuevo backup'" />
                     </h3>
                 </div>
                 <div class="w3-panel">
-					<form method="post" action="#" 
-						th:action="${backupForm.id != 0} ? @{/backup/edit/submit} : @{/backup/new/submit}"
-						th:object="${backupForm}">
-
+					<form method="post" action="#" th:action="${backupForm.id != 0} ? @{/backup/edit/submit} : @{/backup/new/submit}" th:object="${backupForm}">
+						<input type="hidden" id="id" th:field="*{id}" /> 
 						<div class="w3-row-padding">
 							<div class="w3-third">
 								<label class="w3-text-grey"><b><span class="w3-text-red" title="Campo obligatorio">*</span> Código</b></label><br />
@@ -72,7 +70,7 @@
 							</div>
 							<div class="w3-third">
 								<label class="w3-text-grey">
-									<input type="checkbox" class="input-form" id="swSensorMQTT" th:value="*{swSensorMQTT}" />
+									<input type="checkbox" class="input-form" id="swSensorMQTT" th:field="*{swSensorMQTT}" />
 									<b>Sensor MQTT</b><br />
 								</label>
 								<span th:if="${#fields.hasErrors('swSensorMQTT')}" th:errors="*{swSensorMQTT}" class="w3-text-red help-block" id="swSensorMQTT-error">Errores</span>

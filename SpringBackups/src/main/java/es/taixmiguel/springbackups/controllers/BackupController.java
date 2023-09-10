@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.taixmiguel.springbackups.models.Backup;
@@ -36,21 +37,22 @@ public class BackupController extends AbstractController {
 		return "forms/newBackup";
 	}
 
+	@GetMapping("/updateBackup/{id}")
+	public String updateBackup(Model model, @PathVariable Long id) {
+		updateModelUpdateBackup(model, service.findById(id));
+		return "forms/newBackup";
+	}
+
+	@GetMapping("/deleteBackup/{id}")
+	public String deleteBackup(Model model, @PathVariable Long id) {
+		service.remove(id);
+		return "redirect:/";
+	}
+
 	@PostMapping("/backup/new/submit")
 	public String newBackupSubmit(Model model, @Validated @ModelAttribute("backupForm") Backup newBackup,
 			BindingResult bindingResult) {
-		if (newBackup.getName().isEmpty())
-			bindingResult.addError(new FieldError("name", "name", "No puede estar vacio"));
-		if (newBackup.getName().contains(" "))
-			bindingResult.addError(new FieldError("name", "name", "No puede incluir espacios vacios en blanco"));
-
-		if (newBackup.getSourceDir().isEmpty())
-			bindingResult.addError(new FieldError("sourceDir", "sourceDir", "No puede estar vacio"));
-		if (newBackup.getDestinationDir().isEmpty())
-			bindingResult.addError(new FieldError("destinationDir", "destinationDir", "No puede estar vacio"));
-
-		if (newBackup.getStorageService() == null)
-			bindingResult.addError(new FieldError("storageService", "storageService", "No puede estar vacio"));
+		validateModelBackup(newBackup, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			updateModelNewBackup(model, newBackup);
@@ -61,8 +63,45 @@ public class BackupController extends AbstractController {
 		return "redirect:/";
 	}
 
+	@PostMapping("/backup/edit/submit")
+	public String editBackupSubmit(Model model, @Validated @ModelAttribute("backupForm") Backup editBackup,
+			BindingResult bindingResult) {
+		validateModelBackup(editBackup, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			updateModelNewBackup(model, editBackup);
+			return "forms/newBackup";
+		}
+
+		service.update(editBackup);
+		return "redirect:/";
+	}
+
+	private void validateModelBackup(Backup backup, BindingResult bindingResult) {
+		if (backup.getName().isEmpty())
+			bindingResult.addError(new FieldError("name", "name", "No puede estar vacio"));
+		if (backup.getName().contains(" "))
+			bindingResult.addError(new FieldError("name", "name", "No puede incluir espacios vacios en blanco"));
+
+		if (backup.getSourceDir().isEmpty())
+			bindingResult.addError(new FieldError("sourceDir", "sourceDir", "No puede estar vacio"));
+		if (backup.getDestinationDir().isEmpty())
+			bindingResult.addError(new FieldError("destinationDir", "destinationDir", "No puede estar vacio"));
+
+		if (backup.getStorageService() == null)
+			bindingResult.addError(new FieldError("storageService", "storageService", "No puede estar vacio"));
+	}
+
 	private void updateModelNewBackup(Model model, Backup backup) {
-		model.addAttribute("title", "Creación de backup");
+		updateModelBackup(model, backup, "Creación de backup");
+	}
+
+	private void updateModelUpdateBackup(Model model, Backup backup) {
+		updateModelBackup(model, backup, "Actualización de backup");
+	}
+
+	private void updateModelBackup(Model model, Backup backup, String title) {
+		model.addAttribute("title", title);
 		model.addAttribute("backupForm", backup);
 		model.addAttribute("storageServices", StorageService.values());
 	}

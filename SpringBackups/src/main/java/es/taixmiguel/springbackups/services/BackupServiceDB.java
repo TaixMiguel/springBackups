@@ -25,6 +25,23 @@ public class BackupServiceDB implements BackupService {
 	}
 
 	@Override
+	public Backup update(Backup backup) {
+		return repository.save(backup);
+	}
+
+	@Override
+	public Backup remove(Long id) {
+		Backup backup = findById(id);
+		repository.delete(backup);
+		return backup;
+	}
+
+	@Override
+	public Backup findById(Long id) {
+		return repository.findById(id).orElse(null);
+	}
+
+	@Override
 	public List<Backup> findAll() {
 		return repository.findAll();
 	}
