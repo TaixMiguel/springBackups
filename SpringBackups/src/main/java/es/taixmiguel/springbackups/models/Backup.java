@@ -9,8 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -22,7 +22,7 @@ import jakarta.persistence.TemporalType;
 public class Backup {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(nullable = false)
@@ -30,7 +30,6 @@ public class Backup {
 
 	private String description;
 
-	@ManyToOne
 	private StorageService storageService;
 
 	@Column(nullable = false)

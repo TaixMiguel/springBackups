@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import es.taixmiguel.springbackups.models.Backup;
-import es.taixmiguel.springbackups.models.StorageService;
 import es.taixmiguel.springbackups.repositories.BackupRepository;
-import es.taixmiguel.springbackups.repositories.StorageServiceRepository;
 
 /**
  * @author TaixMiguel
@@ -20,8 +18,6 @@ public class BackupServiceDB implements BackupService {
 
 	@Autowired
 	private BackupRepository repository;
-	@Autowired
-	private StorageServiceRepository storageRepository;
 
 	@Override
 	public Backup add(Backup backup) {
@@ -31,10 +27,5 @@ public class BackupServiceDB implements BackupService {
 	@Override
 	public List<Backup> findAll() {
 		return repository.findAll();
-	}
-
-	@Override
-	public List<StorageService> getAllStorageService() {
-		return storageRepository.findAll();
 	}
 }
