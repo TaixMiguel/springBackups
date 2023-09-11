@@ -30,6 +30,8 @@ public class BackupHistory {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Backup backup;
 
+	private String backupName;
+
 	private int backupSize;
 
 	private String status;
@@ -57,6 +59,14 @@ public class BackupHistory {
 
 	public void setBackup(Backup backup) {
 		this.backup = backup;
+	}
+
+	public String getBackupName() {
+		return backupName;
+	}
+
+	public void setBackupName(String backupName) {
+		this.backupName = backupName;
 	}
 
 	public int getBackupSize() {
