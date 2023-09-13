@@ -31,7 +31,7 @@ public class BackupController extends AbstractController {
 	@GetMapping("/")
 	public String backupList(Model model) {
 		model.addAttribute("title", "Listado de backups");
-		model.addAttribute("backups", service.findAll());
+		model.addAttribute("backups", service.findComplete());
 		return "index";
 	}
 

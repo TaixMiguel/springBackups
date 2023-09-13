@@ -33,6 +33,17 @@
 								<a th:href="@{/deleteBackup/{id}(id=${backup.id})}"><i class="w3-xlarge fa fa-trash w3-hover-text-red"></i></a>
 							</div>
 
+							<div class="w3-row" th:if="${backup.history != null and not #lists.isEmpty(backup.history)}" th:with="history=${backup.history[#lists.size(backup.history) - 1]}">
+								<div class="w3-container w3-quarter w3-right-align">
+          							<strong>Última ejecución</strong>
+        						</div>
+        						<div class="w3-container w3-quarter" th:text="${history.formatTime}" />
+        						<div class="w3-container w3-quarter w3-right-align">
+          							<strong>Duración</strong>
+        						</div>
+        						<div class="w3-container w3-quarter" th:text="${history.formatDuration}" />
+							</div>
+
 							<div class="w3-row">
 								<div class="w3-container w3-quarter w3-right-align">
 									<strong>Nº de backups máx.</strong>
@@ -45,6 +56,34 @@
 							</div>
 							<div class="w3-container w3-large" th:text="${backup.description}" />
 						</p>
+						
+						<div th:if="${backup.history != null and not #lists.isEmpty(backup.history)}">
+							<button th:attr="onClick=|$('#historicoBackup${backup.id}').toggleClass('w3-show')|" class="w3-btn w3-block w3-gray w3-left-align">
+      							Consultar todas las ejecuciones
+    						</button>
+
+    						<div th:id="'historicoBackup'+${backup.id}" class="w3-hide">
+								<table class="w3-table-all w3-striped w3-border">
+        							<tr>
+          								<th></th>
+										<th class="w3-center">Fecha</th>
+										<th class="w3-center">Duración</th>
+										<th class="w3-center">Nombre del fichero</th>
+										<th class="w3-center">Tamaño del backup</th>
+										<th class="w3-center">Estado</th>
+    								</tr>
+									<tr th:each="history : ${backup.history}">
+										<td class="w3-left" th:text="${historyStat.count} + '.'" />
+										<td class="w3-center" th:text="${history.formatTime}" />
+										<td class="w3-center" th:text="${history.formatDuration}" />
+										<td class="w3-center" th:text="${history.name}" />
+										<td class="w3-center" th:text="${history.size}" />
+										<td class="w3-center" th:text="${history.statusDescription}" />
+									</tr>
+  								</table>
+    						</div>
+    						<br />
+						</div>
 	  				</div>
 				</article>
             </div>

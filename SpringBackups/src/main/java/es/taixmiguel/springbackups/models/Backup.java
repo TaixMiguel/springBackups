@@ -1,6 +1,8 @@
 package es.taixmiguel.springbackups.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 /**
  * @author TaixMiguel
@@ -50,10 +53,14 @@ public class Backup {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date auditTime;
 
+	@Transient
+	private List<BackupHistory> history;
+
 	public Backup() {
 		this.id = Long.valueOf(0);
 		this.nBackupsMax = 10;
 		this.swSensorMQTT = false;
+		this.history = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -142,6 +149,14 @@ public class Backup {
 
 	public void setAuditTime(Date auditTime) {
 		this.auditTime = auditTime;
+	}
+
+	public List<BackupHistory> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<BackupHistory> history) {
+		this.history = history;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package es.taixmiguel.springbackups.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -34,7 +35,7 @@ public class BackupHistory {
 
 	private int backupSize;
 
-	private String status;
+	private States status;
 
 	private float duration;
 
@@ -43,6 +44,15 @@ public class BackupHistory {
 	private Date auditTime;
 
 	protected BackupHistory() {
+		this.id = Long.valueOf(0);
+		this.status = States.PDTE;
+		this.backupSize = 0;
+		this.duration = 0;
+	}
+
+	public BackupHistory(Backup backup) {
+		this();
+		this.backup = backup;
 	}
 
 	public long getId() {
@@ -61,12 +71,20 @@ public class BackupHistory {
 		this.backup = backup;
 	}
 
+	public String getName() {
+		return hasGenerated() ? backupName : "-";
+	}
+
 	public String getBackupName() {
 		return backupName;
 	}
 
 	public void setBackupName(String backupName) {
 		this.backupName = backupName;
+	}
+
+	public String getSize() {
+		return !hasGenerated() ? "-" : "" + backupSize;
 	}
 
 	public int getBackupSize() {
@@ -77,12 +95,21 @@ public class BackupHistory {
 		this.backupSize = backupSize;
 	}
 
-	public String getStatus() {
+	public States getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public String getStatusDescription() {
+		return status.getName();
+	}
+
+	public void setStatus(States status) {
 		this.status = status;
+	}
+
+	public String getFormatDuration() {
+		return !hasGenerated() ? "-"
+				: String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60, (duration % 60));
 	}
 
 	public float getDuration() {
@@ -93,11 +120,33 @@ public class BackupHistory {
 		this.duration = duration;
 	}
 
+	public String getFormatTime() {
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(auditTime);
+	}
+
 	public Date getAuditTime() {
 		return auditTime;
 	}
 
 	public void setAuditTime(Date auditTime) {
 		this.auditTime = auditTime;
+	}
+
+	private boolean hasGenerated() {
+		return backupSize > 0;
+	}
+
+	public enum States {
+		PDTE("Pendiente"), CREATED("Creado"), UPLOAD("Almacenado"), ERROR("Error");
+
+		private final String name;
+
+		private States(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
 	}
 }
