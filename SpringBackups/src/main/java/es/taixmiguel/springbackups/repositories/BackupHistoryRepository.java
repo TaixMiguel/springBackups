@@ -13,4 +13,6 @@ import es.taixmiguel.springbackups.models.BackupHistory;
 public interface BackupHistoryRepository extends JpaRepository<BackupHistory, Long> {
 
 	List<BackupHistory> findByBackup(Backup backup);
+
+	List<BackupHistory> findByBackupAndStatus(Backup backup, BackupHistory.States status);
 }

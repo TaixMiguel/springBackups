@@ -31,7 +31,7 @@ public class LocalStorageService extends AbstractStorageService {
 	@Override
 	public Optional<File> pull() {
 		Path backupFile = getPathBackupFile();
-		if (Files.exists(backupFile))
+		if (backupFile != null && Files.exists(backupFile))
 			return Optional.ofNullable(backupFile.toFile());
 
 		return Optional.empty();
@@ -47,6 +47,6 @@ public class LocalStorageService extends AbstractStorageService {
 	}
 
 	private Path getPathBackupFile() {
-		return Paths.get(getDestinationDir(), getNameFileBackup());
+		return getNameFileBackup() != null ? Paths.get(getDestinationDir(), getNameFileBackup()) : null;
 	}
 }

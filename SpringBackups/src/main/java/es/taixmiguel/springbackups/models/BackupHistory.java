@@ -6,10 +6,8 @@ import java.util.Date;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,12 +26,12 @@ public class BackupHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	private Backup backup;
 
 	private String backupName;
 
-	private int backupSize;
+	private long backupSize;
 
 	private States status;
 
@@ -46,8 +44,8 @@ public class BackupHistory {
 	protected BackupHistory() {
 		this.id = Long.valueOf(0);
 		this.status = States.PDTE;
-		this.backupSize = 0;
-		this.duration = 0;
+		this.backupSize = -1;
+		this.duration = -1;
 	}
 
 	public BackupHistory(Backup backup) {
@@ -87,11 +85,11 @@ public class BackupHistory {
 		return !hasGenerated() ? "-" : "" + backupSize;
 	}
 
-	public int getBackupSize() {
+	public long getBackupSize() {
 		return backupSize;
 	}
 
-	public void setBackupSize(int backupSize) {
+	public void setBackupSize(long backupSize) {
 		this.backupSize = backupSize;
 	}
 
@@ -109,7 +107,8 @@ public class BackupHistory {
 
 	public String getFormatDuration() {
 		return !hasGenerated() ? "-"
-				: String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60, (duration % 60));
+				: duration == 0 ? "0:00:00"
+						: String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60, (duration % 60));
 	}
 
 	public float getDuration() {

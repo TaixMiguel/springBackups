@@ -58,7 +58,7 @@ public class BackupController extends AbstractController {
 		model.addAttribute("title", "Ejecución de backup");
 		Backup backup = service.findById(id);
 		model.addAttribute("backup", backup);
-		backupCreator.createBackup(backup);
+		backupCreator.createNewBackup(backup);
 		return "executeBackup";
 	}
 
