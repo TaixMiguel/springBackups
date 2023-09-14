@@ -17,5 +17,9 @@ public interface BackupService {
 
 	public Backup findById(Long id);
 
+	public Backup findCompleteById(Long id);
+
 	public List<Backup> findAll();
+
+	public List<Backup> findComplete();
 }

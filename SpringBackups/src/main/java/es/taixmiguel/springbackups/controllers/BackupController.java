@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import es.taixmiguel.springbackups.logic.backup.AsyncBackupCreator;
 import es.taixmiguel.springbackups.models.Backup;
 import es.taixmiguel.springbackups.models.StorageService;
 import es.taixmiguel.springbackups.services.BackupService;
@@ -24,10 +25,13 @@ public class BackupController extends AbstractController {
 	@Autowired
 	private BackupService service;
 
+	@Autowired
+	private AsyncBackupCreator backupCreator;
+
 	@GetMapping("/")
 	public String backupList(Model model) {
 		model.addAttribute("title", "Listado de backups");
-		model.addAttribute("backups", service.findAll());
+		model.addAttribute("backups", service.findComplete());
 		return "index";
 	}
 
@@ -47,6 +51,15 @@ public class BackupController extends AbstractController {
 	public String deleteBackup(Model model, @PathVariable Long id) {
 		service.remove(id);
 		return "redirect:/";
+	}
+
+	@GetMapping("/execBackup/{id}")
+	public String executeBackup(Model model, @PathVariable Long id) {
+		model.addAttribute("title", "Ejecución de backup");
+		Backup backup = service.findById(id);
+		model.addAttribute("backup", backup);
+		backupCreator.createNewBackup(backup);
+		return "executeBackup";
 	}
 
 	@PostMapping("/backup/new/submit")
